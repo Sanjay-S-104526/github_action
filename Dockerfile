@@ -1,23 +1,17 @@
-# Use the official Node.js image as a base image
-FROM node:20-alpine
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
-COPY . .
-
-# Build the Next.js application
-RUN npm run build
-
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Command to start the application
-CMD ["npm", "start"]
+# Use the official Nginx image from Docker Hub
+FROM nginx:latest
+ 
+# Remove the default Nginx website
+RUN rm -rf /usr/share/nginx/html/*
+ 
+# Copy your static website files into the container
+COPY ./dist /usr/share/nginx/html
+ 
+# Copy a custom Nginx config file (optional)
+# COPY nginx.conf /etc/nginx/nginx.conf
+ 
+# Expose port 80
+EXPOSE 80
+ 
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
