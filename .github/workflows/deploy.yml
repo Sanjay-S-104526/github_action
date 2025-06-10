@@ -29,7 +29,12 @@ jobs:
       - name: Automatic Tagging of Releases
         id: increment-git-tag
         run: |
-          bash ./build/git_update.sh -v major
+          if [ -f ./build/git_update.sh ]; then
+            chmod +x ./build/git_update.sh
+            ./build/git_update.sh -v major
+          else
+            echo "⚠️ Warning: ./build/git_update.sh not found. Skipping tagging."
+          fi
  
       - name: Build, Tag, and Push the Image to Amazon ECR
         id: build-image
