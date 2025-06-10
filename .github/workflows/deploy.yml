@@ -11,5 +11,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: docker build . -t sanjay4051/githubactions
-    - run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin 
+    - run: echo "${{secrets.DOCKER_PAT_TOKEN}}" | docker login -u ${{vars.DOCKER_USERNAME}} --password-stdin 
     - run: docker push sanjay4051/githubactions:latest
